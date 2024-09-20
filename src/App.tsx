@@ -1,24 +1,31 @@
-import { useEffect } from "react";
 import "./App.css";
-import { user } from "./components/types/general_types";
-import { AppContextState } from "./contexts/AppContext";
-import DataContextDisplay from "./contexts/ContextDisplay";
+import AboutPage from "./components/AboutPage";
+import ContactPage from "./components/ContactPage";
+import HomePage from "./components/HomePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NavBar from "./layouts/NavBar";
+import Footer from "./layouts/Footer";
+import ComorosPage from "./components/ComorosPage";
+import UgandaPage from "./components/UgandaPage";
+import LoginPage from "./components/LoginPage";
+import SigninPage from "./components/SigninPage";
+import NoPageFound from "./components/NoPageFound";
 
 function App() {
-  const context = AppContextState();
-
-  const FetchUsers = async () => {
-    const users = await fetch("https://jsonplaceholder.typicode.com/users");
-    const data = (await users.json()) as user[];
-    console.log({ users: data });
-    context.setUsers(data);
-  };
-  useEffect(() => {
-    FetchUsers();
-  }, []);
   return (
     <div>
-      <DataContextDisplay />
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/comores" element={<ComorosPage />} />
+        <Route path="/uganda" element={<UgandaPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signin" element={<SigninPage />} />
+        <Route path="*" element={<NoPageFound />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
